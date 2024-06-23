@@ -1,5 +1,5 @@
 # Periodic Table
-Computer program to help me memorizing the periodic table.
+Computer program to help me memorize the periodic table.
 
 Written on a random Sunday.
 
@@ -30,4 +30,4 @@ Practice shortcuts from elements (randomised)
 
 ***
 
-Maybe I'll add more later on, answer the group and period of a specific element.
+Maybe I'll add more later on, like answer the group and period of a specific element.
