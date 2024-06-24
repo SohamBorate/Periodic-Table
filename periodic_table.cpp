@@ -183,14 +183,18 @@ int main(int argc, char **argv) {
     }
 
     if (string(argv[1]).compare("groups") == 0) {
-        if (argc > 3) {
-            if (string(argv[3]).compare("hard") == 0) {
-                cout << "Practice " << argv[2] << " for each group (randomised)\n\n";
-                hard(argv[2], true);
+        if (string(argv[2]).compare("elements") == 0 || string(argv[2]).compare("tricks") == 0) {
+            if (argc > 3) {
+                if (string(argv[3]).compare("hard") == 0) {
+                    cout << "Practice " << argv[2] << " for each group (randomised)\n\n";
+                    hard(argv[2], true);
+                }
+            } else {
+                cout << "Practice " << argv[2] << " for each group\n\n";
+                easy(argv[2], true);
             }
         } else {
-            cout << "Practice " << argv[2] << " for each group\n\n";
-            easy(argv[2], true);
+            cout << "Usage: periodic_table (groups / elements / tricks) (elements / tricks) <hard>\n";
         }
     } else if (string(argv[1]).compare("elements") == 0 && string(argv[2]).compare("tricks") == 0) {
         if (argc > 3) {
