@@ -3,29 +3,34 @@ Computer program to help me memorize the periodic table.
 
 Written on a random Sunday.
 
-Elements and shortcuts are from Group 1 to Group 18.
+Elements and tricks are from Group 1 to Group 18.
 
 Lanthanoid and Actinoid series are not there, memorize it the old-fashioned, less cooler way ;)
 
 ## Usage
-Practice elements from shortcuts
+- Practice elements for each group
 ```
->>> periodic_table elements
-```
-
-Practice shortcuts from elements
-```
->>> periodic_table shortcuts
+>>> periodic_table groups elements
 ```
 
-Practice elements from shortcuts (randomised)
+- Practice tricks for each group
 ```
->>> periodic_table elements hard
+>>> periodic_table groups tricks
 ```
 
-Practice shortcuts from elements (randomised)
+- Practice elements by tricks as hints
 ```
->>> periodic_table shortcuts hard
+>>> periodic_table elements tricks
+```
+
+- Practice tricks by elements as hints
+```
+>>> periodic_table tricks elements
+```
+
+- Add `hard` at the end to randomise the order, for example:
+```
+>>> periodic_table groups tricks hard
 ```
 
 ***

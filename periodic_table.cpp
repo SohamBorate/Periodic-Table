@@ -6,7 +6,28 @@
 #include <string>
 using namespace std;
 
-string shortcuts[18] = {
+string groups[18] = {
+    "IA",
+    "IIA",
+    "IIIB",
+    "IVB",
+    "VB",
+    "VIB",
+    "VIIB",
+    "VIII",
+    "VIII",
+    "VIII",
+    "IB",
+    "IIB",
+    "IIIA",
+    "IVA",
+    "VA",
+    "VIA",
+    "VIIA",
+    "VIIIA"
+};
+
+string tricks[18] = {
     "Helina Ki Rab Se Faryaad",
     "Beta Mange Car Scooter Baap Raazi",
     "Scyla Act",
@@ -48,54 +69,74 @@ string elements[18] = {
     "He Ne Ar Kr Xe Rn"
 };
 
-void ask_element(int index) {
+void ask_element(int index, bool group) {
     string element = elements[index];
-    cout << shortcuts[index] << "\n";
+    if (group) {
+        cout << "Group " << index + 1 << " / " << groups[index] << "\n";
+    } else {
+        cout << tricks[index] << "\n";
+    }
+
+    cout << "Type the elements: ";
 
     string answer;
     getline(cin, answer);
 
     if (answer.compare(element) == 0) {
-        cout << "\n";
+        cout << "Correct\n\n";
         return;
     }
 
-    cout << element << "\n\n";
+    cout << "Wrong, elements are: ";
+    cout << element << "\n";
+    if (group) {
+        cout << "Trick is: " << tricks[index] << "\n";
+    }
+    cout << "\n";
 }
 
-void ask_shortcut(int index) {
-    string shortcut = shortcuts[index];
-    cout << elements[index] << "\n";
+void ask_trick(int index, bool group) {
+    string trick = tricks[index];
+    if (group) {
+        cout << "Group " << index + 1 << " / " << groups[index] << "\n";
+    } else {
+        cout << elements[index] << "\n";
+    }
+
+    cout << "Type the trick: ";
 
     string answer;
     getline(cin, answer);
 
     transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
-    transform(shortcut.begin(), shortcut.end(), shortcut.begin(), ::tolower);
+    transform(trick.begin(), trick.end(), trick.begin(), ::tolower);
 
-    if (answer.compare(shortcut) == 0) {
-        cout << "\n";
+    if (answer.compare(trick) == 0) {
+        cout << "Correct\n\n";
         return;
     }
 
-    cout << shortcut << "\n\n";
+    cout << "Wrong, trick is: ";
+    cout << trick << "\n";
+    if (group) {
+        cout << "Elements are: " << elements[index] << "\n";
+    }
+    cout << "\n";
 }
 
-void easy(string arg) {
+void easy(string arg, bool group) {
     if (string("elements").compare(arg) == 0) {
         for (int index = 0; index < 18; index++) {
-            ask_element(index);
+            ask_element(index, group);
         }
-    } else if (string("shortcuts").compare(arg) == 0) {
+    } else if (string("tricks").compare(arg) == 0) {
         for (int index = 0; index < 18; index++) {
-            ask_shortcut(index);
+            ask_trick(index, group);
         }
-    } else {
-        cout << "Usage: periodic_table (elements / shortcuts) <hard>\n";
     }
 }
 
-void hard(string arg) {
+void hard(string arg, bool group) {
     bool done[18] = {};
     for (int i = 0; i < 18; i++) {
         done[i] = false;
@@ -108,7 +149,7 @@ void hard(string arg) {
     std::mt19937 gen(rd());
 
     // Create a distribution object with the defined range
-    std::uniform_int_distribution<> distrib(0, 18);
+    std::uniform_int_distribution<> distrib(0, 17);
 
     if (string("elements").compare(arg) == 0) {
         for (int i = 0; i < 18; i++) {
@@ -119,9 +160,9 @@ void hard(string arg) {
 
             done[index] = true;
 
-            ask_element(index);
+            ask_element(index, group);
         }
-    } else if (string("shortcuts").compare(arg) == 0) {
+    } else if (string("tricks").compare(arg) == 0) {
         for (int i = 0; i < 18; i++) {
             int index = 0;
             do {
@@ -130,26 +171,49 @@ void hard(string arg) {
 
             done[index] = true;
 
-            ask_shortcut(index);
+            ask_trick(index, group);
         }
-    } else {
-        cout << "Usage: periodic_table (elements / shortcuts) <hard>\n";
     }
 }
 
 int main(int argc, char **argv) {
-    if (argc == 1) {
-        cout << "Usage: periodic_table (elements / shortcuts) <hard>\n";
-    } else if (argc == 2) {
-        easy(argv[1]);
-    } else if (argc == 3) {
-        if (string(argv[2]).compare("hard") == 0) {
-            hard(argv[1]);
+    if (argc < 3 || argc > 4) {
+        cout << "Usage: periodic_table (groups / elements / tricks) (elements / tricks) <hard>\n";
+        return 0;
+    }
+
+    if (string(argv[1]).compare("groups") == 0) {
+        if (argc > 3) {
+            if (string(argv[3]).compare("hard") == 0) {
+                cout << "Practice " << argv[2] << " for each group (randomised)\n\n";
+                hard(argv[2], true);
+            }
         } else {
-            cout << "Usage: periodic_table (elements / shortcuts) <hard>\n";
+            cout << "Practice " << argv[2] << " for each group\n\n";
+            easy(argv[2], true);
+        }
+    } else if (string(argv[1]).compare("elements") == 0 && string(argv[2]).compare("tricks") == 0) {
+        if (argc > 3) {
+            if (string(argv[3]).compare("hard") == 0) {
+                cout << "Practice " << argv[1] << " by " << argv[2] << " (randomised)\n\n";
+                hard(argv[1], false);
+            }
+        } else {
+            cout << "Practice " << argv[1] << " by " << argv[2] << "\n\n";
+            easy(argv[1], false);
+        }
+    } else if (string(argv[1]).compare("tricks") == 0 && string(argv[2]).compare("elements") == 0) {
+        if (argc > 3) {
+            if (string(argv[3]).compare("hard") == 0) {
+                cout << "Practice " << argv[1] << " by " << argv[2] << " (randomised)\n\n";
+                hard(argv[1], false);
+            }
+        } else {
+            cout << "Practice " << argv[1] << " by " << argv[2] << "\n\n";
+            easy(argv[1], false);
         }
     } else {
-        cout << "Usage: periodic_table (elements / shortcuts) <hard>\n";
+        cout << "Usage: periodic_table (groups / elements / tricks) (elements / tricks) <hard>\n";
     }
 
     return 0;
